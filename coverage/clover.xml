@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1714141009110" clover="3.2.0">
+  <project timestamp="1714141009110" name="All files">
+    <metrics statements="2" coveredstatements="2" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1" elements="5" coveredelements="5" complexity="0" loc="2" ncloc="2" packages="1" files="1" classes="1"/>
+    <file name="01-main.ts" path="/Users/phamquocvy/Documents/PhamQuocVy/ts-learning/src/learning/01-main.ts">
+      <metrics statements="2" coveredstatements="2" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+      <line num="1" count="1" type="stmt"/>
+      <line num="2" count="9" type="cond" truecount="2" falsecount="0"/>
+    </file>
+  </project>
+</coverage>
