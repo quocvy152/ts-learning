@@ -19,7 +19,7 @@ const isRotationPalindrome = (str) => {
         return true;
     }
 
-    for(let i = 0; i < str.length; i++) {
+    for(let i = 0; i < str.length - 1; i++) {
         let str1 = str.substring(0, i + 1);
         let str2 = str.substring(i + 1, str.length);
         console.log({str1, str2});

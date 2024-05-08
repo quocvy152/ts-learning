@@ -23,6 +23,9 @@
  *  + Array parent: [9, -2, 3, -4, 5, 6, 10, -1] => Trả về tổng lớn nhất của SubArray Parent => Sum: 8
  */
 const sumMaxSubArr = (array) => {
+    if(array.length === 0) 
+        return 0;
+
     let maxCurrent = array[0];
     let maxSubArr = array[0];
 

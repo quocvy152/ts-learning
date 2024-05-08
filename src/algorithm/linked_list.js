@@ -90,6 +90,21 @@ class LinkedList {
     nodeNeedRemove.next = null;
   }
 
+  revertLinkedList() {
+    let prev = null;
+    let current = this.first;
+    let next = null;
+
+    while (current) {
+      next = current.next;
+      current.next = prev;
+      prev = current;
+      current = next;
+    }
+
+    this.first = prev;
+  }
+
   showLinkedList() {
     let result = '';
     let current = this.first;
@@ -126,4 +141,7 @@ linkedList.removeLatestNode();
 linkedList.showLinkedList(); // log
 
 linkedList.removeNodeByCondition(6);
+linkedList.showLinkedList(); // log
+
+linkedList.revertLinkedList();
 linkedList.showLinkedList(); // log
