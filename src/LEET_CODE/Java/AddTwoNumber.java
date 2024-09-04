@@ -1,12 +1,7 @@
 package LEET_CODE.Java;
-import java.util.ArrayList;
 
-/**
- * Solution:
- * Step 1: Loop list node to convert to number (example: [2, 4, 3] -> 243)
- * Step 2: Plus two number after convert together
- * Step 3: Revert number after convert to another list node
- */
+import java.math.BigInteger;
+import java.util.ArrayList;
 
 public class AddTwoNumber {
     public static class ListNode {
@@ -38,16 +33,16 @@ public class AddTwoNumber {
     }
 
     public static ListNode createListNode(int[] arrayNum) {
-        if(arrayNum.length == 0)
+        if (arrayNum.length == 0)
             return null;
 
-        if(arrayNum.length == 1) {
+        if (arrayNum.length == 1) {
             return new ListNode(arrayNum[0]);
         }
 
         ListNode headNode = new ListNode(arrayNum[0]);
 
-        for(int i = 1; i < arrayNum.length; i++) {
+        for (int i = 1; i < arrayNum.length; i++) {
             ListNode newNode = new ListNode(arrayNum[i]);
             ListNode currentNode = headNode;
 
@@ -70,64 +65,63 @@ public class AddTwoNumber {
         ListNode headL1 = l1;
         ListNode headL2 = l2;
 
-        long numberL1 = 0;
-        long numberL2 = 0;
-        long numberL1Revert = 0;
-        long numberL2Revert = 0;
+        BigInteger numberL1 = BigInteger.ZERO;
+        BigInteger numberL2 = BigInteger.ZERO;
 
         int counterNumberZeroHeadL1 = 0;
         int counterNumberZeroHeadL2 = 0;
 
         while (headL1 != null || headL2 != null) {
             if (headL1 != null) {
-                numberL1 = numberL1 * 10 + (long)headL1.val;
-                System.out.println("numberL1" + numberL1);
+                numberL1 = numberL1.multiply(BigInteger.TEN).add(BigInteger.valueOf(headL1.val));
                 headL1 = headL1.next;
 
-                if(numberL1 == 0) {
+                if (numberL1.equals(BigInteger.ZERO)) {
                     counterNumberZeroHeadL1 += 1;
                 }
             }
 
             if (headL2 != null) {
-                numberL2 = numberL2 * 10 + (long)headL2.val;
+                numberL2 = numberL2.multiply(BigInteger.TEN).add(BigInteger.valueOf(headL2.val));
                 headL2 = headL2.next;
 
-                if(numberL2 == 0) {
+                if (numberL2.equals(BigInteger.ZERO)) {
                     counterNumberZeroHeadL2 += 1;
                 }
             }
         }
 
-        while (numberL1 != 0 || numberL2 != 0) {
-            if (numberL1 != 0) {
-                numberL1Revert = numberL1Revert * 10 + (numberL1 % 10);
-                numberL1 = numberL1 / 10;
+        BigInteger numberL1Revert = BigInteger.ZERO;
+        BigInteger numberL2Revert = BigInteger.ZERO;
+
+        while (!numberL1.equals(BigInteger.ZERO) || !numberL2.equals(BigInteger.ZERO)) {
+            if (!numberL1.equals(BigInteger.ZERO)) {
+                numberL1Revert = numberL1Revert.multiply(BigInteger.TEN).add(numberL1.mod(BigInteger.TEN));
+                numberL1 = numberL1.divide(BigInteger.TEN);
             }
 
-            if (numberL2 != 0) {
-                numberL2Revert = numberL2Revert * 10 + (numberL2 % 10);
-                numberL2 = numberL2 / 10;
+            if (!numberL2.equals(BigInteger.ZERO)) {
+                numberL2Revert = numberL2Revert.multiply(BigInteger.TEN).add(numberL2.mod(BigInteger.TEN));
+                numberL2 = numberL2.divide(BigInteger.TEN);
             }
         }
 
-        numberL1Revert = counterNumberZeroHeadL1 == 0 ? numberL1Revert : numberL1Revert * (long)Math.pow(10, counterNumberZeroHeadL1);
-        numberL2Revert = counterNumberZeroHeadL2 == 0 ? numberL2Revert : numberL2Revert * (long)Math.pow(10, counterNumberZeroHeadL2);
+        numberL1Revert = counterNumberZeroHeadL1 == 0 ? numberL1Revert
+                : numberL1Revert.multiply(BigInteger.TEN.pow(counterNumberZeroHeadL1));
+        numberL2Revert = counterNumberZeroHeadL2 == 0 ? numberL2Revert
+                : numberL2Revert.multiply(BigInteger.TEN.pow(counterNumberZeroHeadL2));
 
-        long numberAddTogether = numberL1Revert + numberL2Revert;
+        BigInteger numberAddTogether = numberL1Revert.add(numberL2Revert);
 
         ArrayList<Integer> arrListNode = new ArrayList<>();
 
-        /**
-         * Case đặc biệt cả 2 ListNode đều chỉ có phần tử bằng 0
-         */
-        if(numberAddTogether == 0) {
+        if (numberAddTogether.equals(BigInteger.ZERO)) {
             arrListNode.add(0);
         }
 
-        while(numberAddTogether != 0) {
-            arrListNode.add((int)(numberAddTogether % 10));
-            numberAddTogether = numberAddTogether / 10;
+        while (!numberAddTogether.equals(BigInteger.ZERO)) {
+            arrListNode.add(numberAddTogether.mod(BigInteger.TEN).intValue());
+            numberAddTogether = numberAddTogether.divide(BigInteger.TEN);
         }
 
         int[] intArray = new int[arrListNode.size()];
@@ -141,22 +135,13 @@ public class AddTwoNumber {
     }
 
     public static void main(String[] args) {
-        // int[] numberListNode1 = { 9 };
-        // int[] numberListNode2 = { 1, 9, 9, 9, 9, 9, 9, 9, 9, 9 };
-
-        // int[] numberListNode1 = { 0,8,6,5,6,8,3,5,7 };
-        // int[] numberListNode2 = { 6,7,8,0,8,5,8,9,7 };
-
-        int[] numberListNode1 = { 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 };
-        int[] numberListNode2 = { 5,6,4 };
+        int[] numberListNode1 = { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 };
+        int[] numberListNode2 = { 5, 6, 4 };
 
         ListNode l1 = createListNode(numberListNode1);
         ListNode l2 = createListNode(numberListNode2);
 
-        // l1.showListNode(l1);
-        // l2.showListNode(l2);
-
         ListNode resListNode = addTwoNumbers(l1, l2);
         resListNode.showListNode(resListNode);
     }
-} 
+}
